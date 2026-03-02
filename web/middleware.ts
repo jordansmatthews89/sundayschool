@@ -2,14 +2,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Edge-compatible: only check for session cookie. Full auth runs in dashboard layout (Node).
-const SESSION_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https')
-  ? '__Secure-authjs.session-token'
-  : 'authjs.session-token';
+function hasSessionCookie(request: NextRequest): boolean {
+  const secure = request.cookies.get('__Secure-authjs.session-token')?.value;
+  const standard = request.cookies.get('authjs.session-token')?.value;
+  return !!(secure || standard);
+}
 
 export function middleware(request: NextRequest) {
   if (!request.nextUrl.pathname.startsWith('/dashboard')) return NextResponse.next();
-  const token = request.cookies.get(SESSION_COOKIE)?.value ?? request.cookies.get('authjs.session-token')?.value;
-  if (!token) return NextResponse.redirect(new URL('/login', request.url));
+  if (!hasSessionCookie(request)) return NextResponse.redirect(new URL('/login', request.url));
   return NextResponse.next();
 }
 

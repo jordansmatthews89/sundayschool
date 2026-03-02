@@ -1,15 +1,29 @@
 import { signIn } from '@/lib/auth';
 
-export default function LoginPage({
+const ERROR_MESSAGES: Record<string, string> = {
+  Configuration: 'Auth is misconfigured. Check Vercel env: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, AUTH_SECRET, NEXTAUTH_URL, ALLOWED_EMAIL.',
+  AccessDenied: 'Your email is not authorized. In Vercel → Settings → Environment Variables, set ALLOWED_EMAIL to your exact Google email.',
+  Default: 'Sign-in failed. Check ALLOWED_EMAIL and AUTH_SECRET in Vercel.',
+};
+
+export default async function LoginPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
+  const { error } = await searchParams;
+  const message = error ? ERROR_MESSAGES[error] ?? ERROR_MESSAGES.Default : null;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 w-full max-w-sm text-center">
         <div className="text-3xl font-serif text-gray-900 mb-1">Family Faith</div>
         <p className="text-gray-400 text-sm mb-8">Creator Dashboard</p>
+        {message && (
+          <div className="mb-6 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-sm text-left">
+            {message}
+          </div>
+        )}
         <form
           action={async () => {
             'use server';

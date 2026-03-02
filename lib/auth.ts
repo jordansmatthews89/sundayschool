@@ -10,9 +10,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      const allowed = process.env.ALLOWED_EMAIL;
+      const allowed = process.env.ALLOWED_EMAIL?.trim();
       if (!allowed) return false;
-      return user.email === allowed;
+      const email = user?.email?.trim().toLowerCase();
+      return email === allowed.toLowerCase();
     },
   },
   pages: {

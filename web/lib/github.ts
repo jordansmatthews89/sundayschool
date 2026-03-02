@@ -1,11 +1,14 @@
-import { Octokit } from '@octokit/rest';
-
-function octokit() {
-  return new Octokit({ auth: process.env.GITHUB_TOKEN });
-}
-
 const OWNER = process.env.GITHUB_OWNER!;
 const REPO = process.env.GITHUB_REPO!;
+const TOKEN = process.env.GITHUB_TOKEN!;
+const BASE = `https://api.github.com/repos/${OWNER}/${REPO}`;
+
+function headers(): HeadersInit {
+  return {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `Bearer ${TOKEN}`,
+  };
+}
 
 export interface GitHubFile {
   content: string;
@@ -14,9 +17,9 @@ export interface GitHubFile {
 }
 
 export async function readFile(path: string): Promise<GitHubFile> {
-  const kit = octokit();
-  const resp = await kit.repos.getContent({ owner: OWNER, repo: REPO, path });
-  const data = resp.data as { content: string; sha: string; path: string };
+  const resp = await fetch(`${BASE}/contents/${path}`, { headers: headers() });
+  if (!resp.ok) throw new Error(`GitHub API ${resp.status}: ${await resp.text()}`);
+  const data = (await resp.json()) as { content: string; sha: string; path: string };
   const content = Buffer.from(data.content, 'base64').toString('utf8');
   return { content, sha: data.sha, path };
 }
@@ -27,15 +30,16 @@ export async function writeFile(
   sha: string,
   message: string
 ): Promise<void> {
-  const kit = octokit();
-  await kit.repos.createOrUpdateFileContents({
-    owner: OWNER,
-    repo: REPO,
-    path,
-    message,
-    content: Buffer.from(content, 'utf8').toString('base64'),
-    sha,
+  const resp = await fetch(`${BASE}/contents/${path}`, {
+    method: 'PUT',
+    headers: { ...headers(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message,
+      content: Buffer.from(content, 'utf8').toString('base64'),
+      sha,
+    }),
   });
+  if (!resp.ok) throw new Error(`GitHub API ${resp.status}: ${await resp.text()}`);
 }
 
 export async function createFile(
@@ -43,21 +47,22 @@ export async function createFile(
   content: string,
   message: string
 ): Promise<void> {
-  const kit = octokit();
-  await kit.repos.createOrUpdateFileContents({
-    owner: OWNER,
-    repo: REPO,
-    path,
-    message,
-    content: Buffer.from(content, 'utf8').toString('base64'),
+  const resp = await fetch(`${BASE}/contents/${path}`, {
+    method: 'PUT',
+    headers: { ...headers(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message,
+      content: Buffer.from(content, 'utf8').toString('base64'),
+    }),
   });
+  if (!resp.ok) throw new Error(`GitHub API ${resp.status}: ${await resp.text()}`);
 }
 
 export async function listDirectory(path: string): Promise<Array<{ name: string; type: string; path: string }>> {
-  const kit = octokit();
   try {
-    const resp = await kit.repos.getContent({ owner: OWNER, repo: REPO, path });
-    const data = resp.data;
+    const resp = await fetch(`${BASE}/contents/${path}`, { headers: headers() });
+    if (!resp.ok) return [];
+    const data = (await resp.json()) as Array<{ name: string; type: string; path: string }>;
     if (!Array.isArray(data)) return [];
     return data.map((item) => ({ name: item.name, type: item.type, path: item.path }));
   } catch {

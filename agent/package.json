@@ -1,0 +1,15 @@
+{
+  "name": "family-faith-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "run-weekly": "node run-weekly.js",
+    "run-weekly:draft": "node run-weekly.js --draft"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "marked": "^9.0.0",
+    "openai": "^4.0.0",
+    "twitter-api-v2": "^1.17.0"
+  }
+}

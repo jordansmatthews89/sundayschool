@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family take-home — Jesus Calms the Storm — Family Faith</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+<body>
+  <div class="promo-banner">
+    <span class="promo-text">Get free family devotionals when you subscribe.</span>
+    <span class="promo-icons"><a href="../../index.html">Home</a></span>
+  </div>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="../../index.html" class="logo">Family Faith</a>
+      <span class="logo-tagline">Helping families grow in faith</span>
+    </div>
+    <nav class="nav">
+      <a href="../../index.html">Home</a>
+      <a href="../index.html">Lessons</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="value-bar">
+    <div><span>&#x1f4da;</span> Bible-based resources</div>
+    <div><span>&#x1f4ac;</span> Support for families</div>
+    <div><span>&#x1f4e6;</span> Digital + print options</div>
+  </div>
+  <div class="page">
+    <div class="breadcrumb">
+      <a href="../index.html">Lessons</a> → Jesus: Life &amp; Teachings → Jesus Calms the Storm → Family take-home
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="print-btn">Print</button>
+      <button type="button" class="btn btn-secondary" id="copy-btn">Copy</button>
+    </div>
+    <div class="lesson-content" id="lesson-content">
+<h1>Family take-home — Jesus Calms the Storm</h1>
+<p><em>Print or email this so families can continue the lesson at home (dinner, bedtime, or family worship).</em></p>
+<hr>
+<h2>This week’s verse</h2>
+<p><strong>“Who then is this, that even the wind and the sea obey him?”</strong> — Mark 4:41 (ESV)</p>
+<p>Say it together once at the start of your family time.</p>
+<hr>
+<h2>Read together (2–3 min)</h2>
+<p><strong>Mark 4:35–41.</strong> Have one person read, or take turns (parent reads most, kids read one verse each).</p>
+<hr>
+<h2>Talk about it (5–7 min)</h2>
+<p>Everyone can answer. No wrong answers.</p>
+<ol>
+<li>What did Jesus do when the disciples were afraid? (He calmed the storm.)</li>
+<li>What does that show us about Jesus? (He’s in charge; He cares; we can trust Him.)</li>
+<li>When do you feel scared or like things are out of control? (Let each person share something small or big.)</li>
+<li><strong>As a family:</strong> How can we remember to talk to Jesus when we’re afraid this week?</li>
+</ol>
+<hr>
+<h2>Do it together (once this week)</h2>
+<ul>
+<li><strong>Pray when we’re scared:</strong> Agree that whenever someone in the family feels worried or afraid, they can say “Can we pray?” and you’ll stop and pray together (even one sentence). Try it at least once this week.</li>
+</ul>
+<hr>
+<h2>Pray (1 min)</h2>
+<p>Thank Jesus that He is with us in every storm. Ask Him to help us trust Him when we’re afraid.</p>
+<hr>
+<p><em>Jesus: Life &amp; Teachings • Week of [date]</em></p>
+
+    </div>
+  </div>
+  <script>
+    document.getElementById('print-btn').onclick = function() { window.print(); };
+    document.getElementById('copy-btn').onclick = function() {
+      var el = document.getElementById('lesson-content');
+      var text = el.innerText || el.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          var btn = document.getElementById('copy-btn');
+          var orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = orig; }, 1500);
+        });
+      } else {
+        var sel = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try {
+          document.execCommand('copy');
+          sel.removeAllRanges();
+          var btn = document.getElementById('copy-btn');
+          var orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = orig; }, 1500);
+        } catch (e) {}
+      }
+    };
+  </script>
+</body>
+</html>

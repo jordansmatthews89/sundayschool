@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lessons — Family Faith</title>
+  <meta name="description" content="Browse family Bible lessons by topic. Leader guide, student sheet, family take-home." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="promo-banner">
+    <span class="promo-text">Get free family devotionals when you subscribe.</span>
+    <span class="promo-icons">
+      <a href="#" aria-label="Facebook">&#x1f4e2;</a>
+      <a href="#" aria-label="Instagram">&#x1f4f7;</a>
+      <a href="#" aria-label="Email">&#x2709;</a>
+    </span>
+  </div>
+
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="../index.html" class="logo">Family Faith</a>
+      <span class="logo-tagline">Helping families grow in faith</span>
+    </div>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="index.html" class="active">Lessons</a>
+      <a href="../admin.html">Admin</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="value-bar">
+    <div><span>&#x1f4da;</span> Bible-based resources</div>
+    <div><span>&#x1f4ac;</span> Support for families</div>
+    <div><span>&#x1f4e6;</span> Digital + print options</div>
+  </div>
+
+  <main class="page">
+    <section class="hero">
+      <h1>Kids Bible Studies</h1>
+      <p class="tagline">Lessons by topic. Open the leader guide, student sheet, or family take-home. Print or copy from each page.</p>
+    </section>
+
+    <div class="filter-section">
+      <h2 class="section-heading">Bible Study Topics</h2>
+      <div class="filter-pills" id="filter-pills">
+        <button type="button" class="filter-pill active" data-series="all">All</button>
+        <button type="button" class="filter-pill" data-series="fruit-of-the-spirit">Fruit of the Spirit</button>
+        <button type="button" class="filter-pill" data-series="jesus-life-teachings">Jesus: Life &amp; Teachings</button>
+      </div>
+    </div>
+
+    <div class="card-grid" id="lesson-grid">
+      <div class="card lesson-card" data-series="fruit-of-the-spirit">
+        <div class="card-title">Love (Week 1)</div>
+        <p class="card-desc">God is love; He loved us first. We love others because we know His love. 1 John 4.</p>
+        <div class="card-links">
+          <a href="fruit-of-spirit-01-love/leader-guide.html">Leader guide</a>
+          <a href="fruit-of-spirit-01-love/student-sheet.html">Student sheet</a>
+          <a href="fruit-of-spirit-01-love/family-take-home.html">Family take-home</a>
+        </div>
+      </div>
+      <div class="card lesson-card" data-series="jesus-life-teachings">
+        <div class="card-title">Jesus Calms the Storm</div>
+        <p class="card-desc">Jesus has authority over creation and our fears. We can trust Him when life feels out of control. Mark 4.</p>
+        <div class="card-links">
+          <a href="jesus-calms-the-storm/leader-guide.html">Leader guide</a>
+          <a href="jesus-calms-the-storm/student-sheet.html">Student sheet</a>
+          <a href="jesus-calms-the-storm/family-take-home.html">Family take-home</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <a href="../index.html">Home</a> · <a href="../index.html#">Subscribe</a> · <a href="#">Privacy</a>
+    </footer>
+  </main>
+
+  <script>
+    (function() {
+      var pills = document.getElementById('filter-pills');
+      var grid = document.getElementById('lesson-grid');
+      if (!pills || !grid) return;
+      pills.addEventListener('click', function(e) {
+        var btn = e.target.closest('.filter-pill');
+        if (!btn) return;
+        var series = btn.getAttribute('data-series');
+        pills.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        grid.querySelectorAll('.lesson-card').forEach(function(card) {
+          var cardSeries = card.getAttribute('data-series');
+          card.style.display = (series === 'all' || cardSeries === series) ? '' : 'none';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

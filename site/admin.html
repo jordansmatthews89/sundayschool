@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Family Faith</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .admin-section { margin-bottom: 2rem; }
+    .admin-section h2 { font-size: 1.125rem; margin: 0 0 0.75rem; color: var(--text); }
+    .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+    .schedule-table th, .schedule-table td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+    .schedule-table th { color: var(--text-muted); font-weight: 500; }
+    .schedule-table tr.next-lesson { background: var(--accent-light); }
+    .schedule-table tr.next-lesson td { font-weight: 500; }
+    .no-data { color: var(--text-muted); font-style: italic; }
+    .override-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+    .override-wrap select { padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.9375rem; }
+    .override-wrap button { padding: 0.4rem 0.75rem; background: var(--accent); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9375rem; }
+    .override-wrap button:hover { background: var(--accent-hover); }
+    .admin-instructions { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.75rem; max-width: 560px; }
+    .admin-instructions a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="promo-banner">
+    <span class="promo-text">Get free family devotionals when you subscribe.</span>
+    <span class="promo-icons">
+      <a href="#" aria-label="Facebook">&#x1f4e2;</a>
+      <a href="#" aria-label="Instagram">&#x1f4f7;</a>
+      <a href="#" aria-label="Email">&#x2709;</a>
+    </span>
+  </div>
+
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="index.html" class="logo">Family Faith</a>
+      <span class="logo-tagline">Helping families grow in faith</span>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="lessons/index.html">Lessons</a>
+      <a href="admin.html" class="active">Admin</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="value-bar">
+    <div><span>&#x1f4da;</span> Bible-based resources</div>
+    <div><span>&#x1f4ac;</span> Support for families</div>
+    <div><span>&#x1f4e6;</span> Digital + print options</div>
+  </div>
+
+  <main class="page">
+    <h1 class="section-heading">Weekly agent dashboard</h1>
+
+    <section class="admin-section" id="next-up">
+      <h2>Next up</h2>
+      <p id="next-lesson-text" class="no-data">Loading…</p>
+    </section>
+
+    <section class="admin-section" id="last-run">
+      <h2>Last run</h2>
+      <p id="last-run-text" class="no-data">—</p>
+      <p id="output-dir-text" class="no-data">—</p>
+    </section>
+
+    <section class="admin-section" id="schedule-section">
+      <h2>Schedule</h2>
+      <div id="schedule-container">
+        <p class="no-data">Loading…</p>
+      </div>
+    </section>
+
+    <section class="admin-section" id="override-section">
+      <h2>Override next lesson</h2>
+      <p>Choose which lesson the next agent run will use, then update <code>agent/config.json</code>.</p>
+      <div class="override-wrap">
+        <select id="override-select" aria-label="Select next lesson">
+          <option value="">— Select lesson —</option>
+        </select>
+        <button type="button" id="copy-config-btn">Copy config snippet</button>
+      </div>
+      <p class="admin-instructions">
+        Paste the copied snippet into <code>agent/config.json</code> (replace <code>nextLessonIndex</code>), then commit and push. The next Monday run will use that lesson.
+        <a href="https://github.com/YOUR_USER/YOUR_REPO/edit/main/agent/config.json" id="edit-github-link" target="_blank" rel="noopener">Edit config on GitHub</a> (replace with your repo URL).
+      </p>
+    </section>
+
+    <footer class="site-footer">
+      Unsubscribe anytime. We never sell your email. <a href="#">Privacy</a>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const dataUrl = 'data/dashboard.json';
+      const nextLessonEl = document.getElementById('next-lesson-text');
+      const lastRunEl = document.getElementById('last-run-text');
+      const outputDirEl = document.getElementById('output-dir-text');
+      const scheduleContainer = document.getElementById('schedule-container');
+      const overrideSelect = document.getElementById('override-select');
+      const copyConfigBtn = document.getElementById('copy-config-btn');
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+          const d = new Date(iso);
+          return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+        } catch (_) { return iso; }
+      }
+
+      function render(dashboard) {
+        const schedule = Array.isArray(dashboard.schedule) ? dashboard.schedule : [];
+        const nextIndex = Number(dashboard.nextLessonIndex);
+        const nextLesson = dashboard.nextLesson || (schedule[nextIndex] || null);
+
+        nextLessonEl.textContent = nextLesson
+          ? `Next up: ${nextLesson.title} (${nextLesson.series || '—'})`
+          : schedule.length ? 'Next lesson index is out of range.' : 'No run data yet.';
+        nextLessonEl.classList.toggle('no-data', !nextLesson && !schedule.length);
+
+        lastRunEl.textContent = dashboard.lastRunAt
+          ? `Last run: ${formatDate(dashboard.lastRunAt)}`
+          : 'No run data yet.';
+        lastRunEl.classList.toggle('no-data', !dashboard.lastRunAt);
+
+        outputDirEl.textContent = dashboard.lastOutputDir
+          ? `Output folder: ${dashboard.lastOutputDir}`
+          : '—';
+        outputDirEl.classList.toggle('no-data', !dashboard.lastOutputDir);
+
+        if (schedule.length === 0) {
+          scheduleContainer.innerHTML = '<p class="no-data">No schedule data yet.</p>';
+        } else {
+          let table = '<table class="schedule-table"><thead><tr><th>#</th><th>Title</th><th>Series</th></tr></thead><tbody>';
+          schedule.forEach(function (row, i) {
+            const trClass = i === nextIndex ? ' class="next-lesson"' : '';
+            table += '<tr' + trClass + '><td>' + i + '</td><td>' + (row.title || row.slug || '') + '</td><td>' + (row.series || '—') + '</td></tr>';
+          });
+          table += '</tbody></table>';
+          scheduleContainer.innerHTML = table;
+        }
+
+        overrideSelect.innerHTML = '<option value="">— Select lesson —</option>';
+        schedule.forEach(function (row, i) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = (row.title || row.slug) + (row.series ? ' (' + row.series + ')' : '');
+          overrideSelect.appendChild(opt);
+        });
+        if (nextIndex >= 0 && nextIndex < schedule.length) {
+          overrideSelect.value = String(nextIndex);
+        }
+      }
+
+      function onError() {
+        nextLessonEl.textContent = 'No run data yet.';
+        nextLessonEl.classList.add('no-data');
+        lastRunEl.textContent = 'No run data yet.';
+        lastRunEl.classList.add('no-data');
+        outputDirEl.textContent = '—';
+        outputDirEl.classList.add('no-data');
+        scheduleContainer.innerHTML = '<p class="no-data">Could not load dashboard.json. Run the agent once to generate it.</p>';
+        overrideSelect.innerHTML = '<option value="">— Select lesson —</option>';
+      }
+
+      fetch(dataUrl)
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(render)
+        .catch(onError);
+
+      copyConfigBtn.addEventListener('click', function () {
+        const idx = overrideSelect.value;
+        if (idx === '') return;
+        const snippet = JSON.stringify({ nextLessonIndex: Number(idx) }, null, 2);
+        navigator.clipboard.writeText(snippet).then(
+          function () { copyConfigBtn.textContent = 'Copied!'; setTimeout(function () { copyConfigBtn.textContent = 'Copy config snippet'; }, 2000); },
+          function () { copyConfigBtn.textContent = 'Copy failed'; }
+        );
+      });
+    })();
+  </script>
+</body>
+</html>

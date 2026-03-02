@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Faith — Ready-to-use family Bible lessons, every week</title>
+  <meta name="description" content="One weekly email. Bible lessons, verses, and family take-homes. No prep required." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a222c;
+      --text: #e8eaed;
+      --text-muted: #9ca3af;
+      --accent: #4a7c59;
+      --accent-hover: #3d6b4a;
+      --border: #2d3748;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 4rem) 1.5rem;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+    .logo span { color: var(--accent); }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin: 0 0 1rem;
+    }
+    .tagline {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      margin: 0 0 2rem;
+    }
+    .benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2.5rem;
+    }
+    .benefits li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .benefits li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .form-wrap p {
+      margin: 0 0 1rem;
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+    .beehiiv-embed-container {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .beehiiv-embed-container iframe {
+      max-width: 100%;
+    }
+    .footer-note {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    .footer-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="logo">Family <span>Faith</span></div>
+    <h1>Ready-to-use family Bible lessons — every week.</h1>
+    <p class="tagline">One email. No prep. A lesson, a verse, and a family take-home you can use at the table or at bedtime.</p>
+    <ul class="benefits">
+      <li><strong>Lesson of the week</strong> — One passage, discussion questions, and a simple activity</li>
+      <li><strong>Verse + question</strong> — A verse to say together and one question to ask your kids</li>
+      <li><strong>Family take-home</strong> — One at-home idea so the lesson doesn’t end on Sunday</li>
+      <li><strong>Once a week</strong> — No spam, no clutter</li>
+    </ul>
+    <div class="form-wrap">
+      <p>Join families getting the weekly lesson. Free.</p>
+      <div class="beehiiv-embed-container" id="beehiiv-embed">
+        <!-- Replace with your beehiiv embed: Growth → Signup forms → Embed. Paste <script> + <iframe> here. -->
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Add your beehiiv form: Growth → Signup forms → create/select form → copy embed code and paste it here.</p>
+      </div>
+    </div>
+    <p class="footer-note">Unsubscribe anytime. We never sell your email. <a href="#">Privacy</a></p>
+  </div>
+</body>
+</html>

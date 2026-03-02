@@ -1,0 +1,10 @@
+# Env files (API keys, secrets)
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+
+# Agent output (optional; workflow may commit this)
+# agent/output/

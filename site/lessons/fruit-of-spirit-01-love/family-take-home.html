@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family take-home — Love (Week 1) — Family Faith</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+<body>
+  <div class="promo-banner">
+    <span class="promo-text">Get free family devotionals when you subscribe.</span>
+    <span class="promo-icons"><a href="../../index.html">Home</a></span>
+  </div>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="../../index.html" class="logo">Family Faith</a>
+      <span class="logo-tagline">Helping families grow in faith</span>
+    </div>
+    <nav class="nav">
+      <a href="../../index.html">Home</a>
+      <a href="../index.html">Lessons</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="value-bar">
+    <div><span>&#x1f4da;</span> Bible-based resources</div>
+    <div><span>&#x1f4ac;</span> Support for families</div>
+    <div><span>&#x1f4e6;</span> Digital + print options</div>
+  </div>
+  <div class="page">
+    <div class="breadcrumb">
+      <a href="../index.html">Lessons</a> → Fruit of the Spirit → Love (Week 1) → Family take-home
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="print-btn">Print</button>
+      <button type="button" class="btn btn-secondary" id="copy-btn">Copy</button>
+    </div>
+    <div class="lesson-content" id="lesson-content">
+<h1>Family take-home — Love (Fruit of the Spirit, Week 1)</h1>
+<p><em>Print or email this so families can continue the lesson at home (dinner, bedtime, or family worship).</em></p>
+<hr>
+<h2>This week’s verse</h2>
+<p><strong>“Beloved, let us love one another, for love is from God.”</strong> — 1 John 4:7 (ESV)</p>
+<p>Say it together once at the start of your family time.</p>
+<hr>
+<h2>Read together (2–3 min)</h2>
+<p><strong>1 John 4:7–11.</strong> Have one person read, or take turns by verse.</p>
+<hr>
+<h2>Talk about it (5–7 min)</h2>
+<p>Everyone can answer. No wrong answers.</p>
+<ol>
+<li>Where does love come from? (From God.)</li>
+<li>How did God show His love to us? (He sent Jesus.)</li>
+<li>Who is someone in our family we can love better this week? What’s one way we can show it?</li>
+<li><strong>As a family:</strong> What’s one thing we’ll do together to show love (e.g. one chore we all help with, one kind word we each say every day)?</li>
+</ol>
+<hr>
+<h2>Do it together (once this week)</h2>
+<ul>
+<li><strong>Love in action:</strong> Each person picks one way they’ll show love to someone in your family (e.g. help with a chore, say “I love you” at bedtime, share something). At the end of the week, ask: Did we do it? How did it go?</li>
+</ul>
+<hr>
+<h2>Pray (1 min)</h2>
+<p>Thank God for loving us first. Ask Him to help us love each other at home and others outside our family this week.</p>
+<hr>
+<p><em>Fruit of the Spirit • Week of [date]</em></p>
+
+    </div>
+  </div>
+  <script>
+    document.getElementById('print-btn').onclick = function() { window.print(); };
+    document.getElementById('copy-btn').onclick = function() {
+      var el = document.getElementById('lesson-content');
+      var text = el.innerText || el.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          var btn = document.getElementById('copy-btn');
+          var orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = orig; }, 1500);
+        });
+      } else {
+        var sel = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try {
+          document.execCommand('copy');
+          sel.removeAllRanges();
+          var btn = document.getElementById('copy-btn');
+          var orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = orig; }, 1500);
+        } catch (e) {}
+      }
+    };
+  </script>
+</body>
+</html>

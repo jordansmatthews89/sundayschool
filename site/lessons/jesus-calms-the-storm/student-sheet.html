@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student sheet — Jesus Calms the Storm — Family Faith</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+<body>
+  <div class="promo-banner">
+    <span class="promo-text">Get free family devotionals when you subscribe.</span>
+    <span class="promo-icons"><a href="../../index.html">Home</a></span>
+  </div>
+  <header class="site-header">
+    <div class="logo-wrap">
+      <a href="../../index.html" class="logo">Family Faith</a>
+      <span class="logo-tagline">Helping families grow in faith</span>
+    </div>
+    <nav class="nav">
+      <a href="../../index.html">Home</a>
+      <a href="../index.html">Lessons</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="value-bar">
+    <div><span>&#x1f4da;</span> Bible-based resources</div>
+    <div><span>&#x1f4ac;</span> Support for families</div>
+    <div><span>&#x1f4e6;</span> Digital + print options</div>
+  </div>
+  <div class="page">
+    <div class="breadcrumb">
+      <a href="../index.html">Lessons</a> → Jesus: Life &amp; Teachings → Jesus Calms the Storm → Student sheet
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="print-btn">Print</button>
+      <button type="button" class="btn btn-secondary" id="copy-btn">Copy</button>
+    </div>
+    <div class="lesson-content" id="lesson-content">
+<h1>Jesus Calms the Storm</h1>
+<p><strong>Memory verse:</strong> “Who then is this, that even the wind and the sea obey him?” — Mark 4:41 (ESV)</p>
+<p><strong>Main point:</strong> Jesus has authority over creation and over our fears. We can trust Him when life feels out of control.</p>
+<hr>
+<h2>Today’s passage: Mark 4:35–41 (ESV)</h2>
+<p>35 On that day, when evening had come, he said to them, “Let us go across to the other side.” 36 And leaving the crowd, they took him with them in the boat, just as he was. And other boats were with him. 37 And a great windstorm arose, and the waves were breaking into the boat, so that the boat was already filling. 38 But he was in the stern, asleep on the cushion. And they woke him and said to him, “Teacher, do you not care that we are perishing?” 39 And he awoke and rebuked the wind and said to the sea, “Peace! Be still!” And the wind ceased, and there was a great calm. 40 He said to them, “Why are you so afraid? Have you still no faith?” 41 And they were filled with great fear and said to one another, “Who then is this, that even the wind and the sea obey him?”</p>
+<hr>
+<h2>Discussion questions</h2>
+<ol>
+<li>How did the disciples feel during the storm? What did they say to Jesus?</li>
+<li>What did Jesus do? What does that show about who He is?</li>
+<li>When has your life felt like a “storm”? Did you talk to Jesus about it?</li>
+<li><strong>This week:</strong> What’s one fear or worry I can bring to Jesus and trust Him with?</li>
+</ol>
+<hr>
+<h2>Takeaway</h2>
+<p>Jesus is with us in the storm. He has power and He cares — we can trust Him.</p>
+
+    </div>
+  </div>
+  <script>
+    document.getElementById('print-btn').onclick = function() { window.print(); };
+    document.getElementById('copy-btn').onclick = function() {
+      var el = document.getElementById('lesson-content');
+      var text = el.innerText || el.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          var btn = document.getElementById('copy-btn');
+          var orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = orig; }, 1500);
+        });
+      } else {
+        var sel = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try {
+          document.execCommand('copy');
+          sel.removeAllRanges();
+          var btn = document.getElementById('copy-btn');
+          var orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = orig; }, 1500);
+        } catch (e) {}
+      }
+    };
+  </script>
+</body>
+</html>

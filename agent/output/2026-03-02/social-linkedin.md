@@ -1,0 +1,1 @@
+This week, we’re diving into the theme of love as the first fruit of the Spirit. Join us as we uncover how knowing God's love enables us to show love to others. Perfect for family discussions! Want to stay updated? Subscribe to our newsletter!

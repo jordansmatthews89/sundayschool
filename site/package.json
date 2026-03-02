@@ -1,0 +1,10 @@
+{
+  "name": "family-faith-site",
+  "private": true,
+  "scripts": {
+    "build-lessons": "node build-lessons.js"
+  },
+  "dependencies": {
+    "marked": "^9.0.0"
+  }
+}

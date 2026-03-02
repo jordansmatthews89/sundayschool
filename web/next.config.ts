@@ -1,9 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ['@octokit/rest'],
-  },
+  serverExternalPackages: ['@octokit/rest'],
 };
 
 export default nextConfig;

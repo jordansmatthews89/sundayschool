@@ -14,12 +14,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!allowed) return false;
       return user.email === allowed;
     },
-    authorized({ auth, request }) {
-      const isLoggedIn = !!auth?.user;
-      const isDashboard = request.nextUrl.pathname.startsWith('/dashboard');
-      if (isDashboard) return isLoggedIn;
-      return true;
-    },
   },
   pages: {
     signIn: '/login',

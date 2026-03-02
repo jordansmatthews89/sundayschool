@@ -21,7 +21,7 @@ export default async function LessonDocPage({ params }: Props) {
   const { slug, type } = await params;
   if (!TYPES.includes(type as DocType)) notFound();
 
-  const lessonDir = path.join(process.cwd(), '..', 'curriculum', 'lessons', slug);
+  const lessonDir = path.join(process.cwd(), 'curriculum', 'lessons', slug);
   const filePath = path.join(lessonDir, `${type}.md`);
   if (!fs.existsSync(filePath)) notFound();
 

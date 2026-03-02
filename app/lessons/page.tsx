@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { PromoBanner, SiteHeader, ValueBar } from '@/components/SiteHeader';
 
 const LESSONS = [
   {
@@ -23,9 +22,6 @@ const SERIES = Array.from(new Set(LESSONS.map((l) => l.series)));
 export default function LessonsPage() {
   return (
     <>
-      <PromoBanner />
-      <SiteHeader />
-      <ValueBar />
       <main className="max-w-5xl mx-auto px-4 py-12">
         <section className="mb-10 text-center">
           <h1 className="text-4xl font-serif text-gray-900 mb-3">Kids Bible Studies</h1>

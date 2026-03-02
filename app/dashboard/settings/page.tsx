@@ -11,6 +11,7 @@ interface Config {
   nextLessonIndex: number;
   beehiivPublicationId?: string;
   signupUrl?: string;
+  shopUrl?: string;
   [key: string]: unknown;
 }
 
@@ -36,7 +37,7 @@ function StatusDot({ active, label }: { active: boolean; label: string }) {
 export default function SettingsPage() {
   const [config, setConfig] = useState<Config | null>(null);
   const [sha, setSha] = useState('');
-  const [form, setForm] = useState({ beehiivPublicationId: '', signupUrl: '' });
+  const [form, setForm] = useState({ beehiivPublicationId: '', signupUrl: '', shopUrl: '' });
   const [keyStatus, setKeyStatus] = useState<KeyStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -53,6 +54,7 @@ export default function SettingsPage() {
     setForm({
       beehiivPublicationId: configData.data?.beehiivPublicationId ?? '',
       signupUrl: configData.data?.signupUrl ?? '',
+      shopUrl: configData.data?.shopUrl ?? '',
     });
     if (keysResp?.ok) {
       setKeyStatus(await keysResp.json());
@@ -111,6 +113,15 @@ export default function SettingsPage() {
               value={form.signupUrl}
               onChange={(e) => setForm((f) => ({ ...f, signupUrl: e.target.value }))}
             />
+          </div>
+          <div>
+            <Label>Shop URL</Label>
+            <Input
+              placeholder="https://yourname.printful.com or your Etsy/Shopify shop"
+              value={form.shopUrl}
+              onChange={(e) => setForm((f) => ({ ...f, shopUrl: e.target.value }))}
+            />
+            <p className="text-xs text-gray-400 mt-1">Use a Printful, Etsy, or Shopify store link. See the <a href="/shop" className="text-teal-600 hover:underline">Store & fulfillment</a> guide.</p>
           </div>
         </div>
         <div className="flex justify-between items-center mt-6">

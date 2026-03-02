@@ -3,13 +3,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/lessons', label: 'Lessons' },
-  { href: '/dashboard', label: 'Admin' },
-  { href: '#', label: 'Shop' },
-  { href: '#', label: 'Contact' },
-];
+function buildLinks(shopUrl?: string) {
+  const links = [
+    { href: '/', label: 'Home' },
+    { href: '/lessons', label: 'Lessons' },
+    { href: '/dashboard', label: 'Admin' },
+    { href: shopUrl?.trim() || '/shop', label: 'Shop', external: !!shopUrl?.trim() },
+    { href: '#', label: 'Contact' },
+  ];
+  return links;
+}
 
 export function PromoBanner() {
   return (
@@ -24,8 +27,9 @@ export function PromoBanner() {
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ shopUrl }: { shopUrl?: string }) {
   const pathname = usePathname();
+  const links = buildLinks(shopUrl);
   return (
     <header className="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex justify-between items-center flex-wrap gap-4 max-w-6xl mx-auto">
       <div className="flex flex-col gap-0.5">
@@ -35,19 +39,24 @@ export function SiteHeader() {
         <span className="text-xs uppercase tracking-widest text-gray-400">Helping families grow in faith</span>
       </div>
       <nav className="flex items-center gap-6">
-        {links.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className={`text-sm no-underline transition-colors ${
-              pathname === l.href || (l.href !== '/' && pathname.startsWith(l.href))
-                ? 'text-teal-600 font-semibold'
-                : 'text-gray-500 hover:text-gray-900'
-            }`}
-          >
-            {l.label}
-          </Link>
-        ))}
+        {links.map((l) => {
+          const isActive = l.external ? false : (pathname === l.href || (l.href !== '/' && pathname.startsWith(l.href)));
+          const className = `text-sm no-underline transition-colors ${
+            isActive ? 'text-teal-600 font-semibold' : 'text-gray-500 hover:text-gray-900'
+          }`;
+          if (l.external) {
+            return (
+              <a key={l.label} href={l.href} className={className} target="_blank" rel="noopener noreferrer">
+                {l.label}
+              </a>
+            );
+          }
+          return (
+            <Link key={l.href} href={l.href} className={className}>
+              {l.label}
+            </Link>
+          );
+        })}
       </nav>
     </header>
   );

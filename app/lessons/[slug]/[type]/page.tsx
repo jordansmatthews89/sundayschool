@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { PromoBanner, SiteHeader, ValueBar } from '@/components/SiteHeader';
 
 const TYPES = ['leader-guide', 'student-sheet', 'family-take-home'] as const;
 type DocType = (typeof TYPES)[number];
@@ -29,9 +28,6 @@ export default async function LessonDocPage({ params }: Props) {
 
   return (
     <>
-      <PromoBanner />
-      <SiteHeader />
-      <ValueBar />
       <main className="max-w-3xl mx-auto px-4 py-10">
         <div className="flex gap-3 mb-6 flex-wrap">
           {TYPES.map((t) => (

@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { PromoBanner, SiteHeader, ValueBar } from '@/components/SiteHeader';
+import { getPublicConfig } from '@/lib/public-config';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { shopUrl } = await getPublicConfig();
+  const shopHref = shopUrl?.trim() || '/shop';
+  const shopExternal = !!shopUrl?.trim();
   return (
     <>
-      <PromoBanner />
-      <SiteHeader />
-      <ValueBar />
       <main className="max-w-4xl mx-auto px-4 py-12">
         <section className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-serif text-gray-900 mb-4">Kids Bible Studies</h1>
@@ -57,10 +57,15 @@ export default function HomePage() {
         </div>
 
         <h2 className="text-2xl font-serif text-gray-900 mb-4">Shop</h2>
-        <a href="#" className="inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors">
-          Shop our designs
-        </a>
-        <p className="text-gray-400 text-sm mt-2">Replace with your Printful or store URL.</p>
+        {shopExternal ? (
+          <a href={shopHref} target="_blank" rel="noopener noreferrer" className="inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors">
+            Shop our designs
+          </a>
+        ) : (
+          <Link href={shopHref} className="inline-block bg-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors">
+            Shop our designs
+          </Link>
+        )}
 
         <footer className="mt-16 pt-8 border-t border-gray-100 text-center text-gray-400 text-sm">
           Unsubscribe anytime. We never sell your email.{' '}
